@@ -1,8 +1,12 @@
 import { createContext } from "react";
-import { GlobalContextType } from "../types/";
+import {
+  GlobalContextActions,
+  GlobalContextType,
+  ReducerAction,
+} from "../types/";
 
 export const initialGlobalContext: GlobalContextType = {
-  dispatch: (() => {}) as any,
+  dispatch: ((_action: ReducerAction<GlobalContextActions, any>) => {}) as any,
   state: {},
 };
 export const GlobalContext =

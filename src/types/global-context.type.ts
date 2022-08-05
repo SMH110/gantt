@@ -1,7 +1,7 @@
 import { ReducerAction } from "./reducer-action.type";
 
 export type GlobalContextType = {
-  dispatch(): React.Dispatch<ReducerAction<GlobalContextActions, any>>;
+  dispatch(action: ReducerAction<GlobalContextActions, any>): void;
   state: {};
 };
 
