@@ -3,10 +3,10 @@ import { initialGlobalContext } from "../contexts";
 import { globalContextStateReducer } from "../reducers";
 import { useSafeDispatch } from "./use-safe-dispatch";
 
-export function useGlobalContextStateReducer() {
+export function useGlobalContextStateReducer(initialState = initialGlobalContext , reducer = globalContextStateReducer) {
   const [state, d] = useReducer(
-    globalContextStateReducer,
-    initialGlobalContext
+    reducer,
+    initialState
   );
 
   const dispatch: typeof d = useSafeDispatch(d);

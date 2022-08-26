@@ -1,1 +1,5 @@
-export function XAxis() {}
+
+export function XAxis() {
+
+    return <div></div>
+}
