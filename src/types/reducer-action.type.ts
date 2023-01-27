@@ -1,4 +1,4 @@
 export type ReducerAction<TAction, TPayload = any> = {
-  action: TAction;
+  type: TAction;
   payload: TPayload;
 };

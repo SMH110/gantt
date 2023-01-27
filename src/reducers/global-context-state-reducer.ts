@@ -1,12 +1,16 @@
-import {
-  GlobalContextActions,
-  GlobalContextType,
-  ReducerAction,
-} from "../types";
+import { GlobalContextActions, GlobalState, ReducerAction } from "../types";
 
 export function globalContextStateReducer(
-  state: GlobalContextType,
+  state: GlobalState,
   action: ReducerAction<GlobalContextActions>
-): GlobalContextType {
+): GlobalState {
+  switch (action.type) {
+    case GlobalContextActions.setRootElementSize: {
+      return {
+        ...state,
+        rootElementSize: action.payload,
+      };
+    }
+  }
   return state;
 }
