@@ -1,7 +1,9 @@
 import { XAxisZoomItem, XAxisZoomItemType } from "../types";
 import { IDateTimeHelper } from "./date-time.interface";
 import { DateTime } from "luxon";
+import { injectable } from "tsyringe";
 
+@injectable()
 export class DateTimeHelper implements IDateTimeHelper {
   getZoomLevel(
     start: number,
