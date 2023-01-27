@@ -3,10 +3,15 @@ import { createContext } from "react";
 import { GlobalContextType, XAxisZoomItemType } from "../types/";
 
 export const defaultState: GlobalState = {
+  start: 0,
+  end: 0,
+
+  plotSizeCalculatorRegistered: false,
   rootElementSize: {
     width: 0,
     height: 0,
   },
+  plotWidth: 0,
   xAxisZoomItems: [
     {
       type: XAxisZoomItemType.year,

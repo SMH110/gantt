@@ -11,6 +11,12 @@ export function globalContextStateReducer(
         rootElementSize: action.payload,
       };
     }
+    case GlobalContextActions.partialStateUpdate: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
   }
   return state;
 }
