@@ -15,6 +15,36 @@ export const initialGlobalContext: GlobalContextType = {
         size: 40,
         selected: false,
       },
+      {
+        type: XAxisZoomItemType.month,
+        size: 60,
+        selected: false,
+      },
+      {
+        type: XAxisZoomItemType.week,
+        size: 40,
+        selected: false,
+      },
+      {
+        type: XAxisZoomItemType.day,
+        size: 60,
+        selected: false,
+      },
+      {
+        type: XAxisZoomItemType.hour,
+        size: 40,
+        selected: false,
+      },
+      {
+        type: XAxisZoomItemType.minute,
+        size: 40,
+        selected: false,
+      },
+      {
+        type: XAxisZoomItemType.second,
+        size: 40,
+        selected: false,
+      },
     ],
   },
 };
