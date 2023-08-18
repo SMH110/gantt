@@ -6,6 +6,7 @@ import { GlobalContextActions, GlobalState } from "../types";
 
 const dateTimeHelper = container.resolve(DateTimeHelper);
 
+
 export function XAxis() {
   const { state, dispatch } = useGlobalContext();
   useEffect(() => {
@@ -19,6 +20,7 @@ export function XAxis() {
 
       const payload: Partial<GlobalState> = {
         plotWidth: totalTicksWidth,
+        plotSizeCalculatorRegistered: true,
         xAxisZoomItems: [
           ...state.xAxisZoomItems,
           { ...zoomLevel, selected: true },
@@ -30,5 +32,5 @@ export function XAxis() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state, state.plotSizeCalculatorRegistered, state.rootElementSize.width]);
 
-  return <div></div>;
+  return <svg width={state.plotWidth}></svg>
 }
