@@ -1,3 +1,4 @@
+import { timeFormat } from "d3";
 import { XAxisZoomItem, XAxisZoomItemType } from "../types";
 import { IDateTimeHelper } from "./date-time.interface";
 import { DateTime } from "luxon";
@@ -29,6 +30,38 @@ export class DateTimeHelper implements IDateTimeHelper {
       zoomLevel: current,
       totalTicksWidth: totalSize,
     };
+  }
+
+  getTicks(start: number, end: number, dateType: XAxisZoomItemType): number {
+    const s = DateTime.fromMillis(start);
+    const e = DateTime.fromMillis(end);
+    const unit = this.mapDateTypeToUnit(dateType);
+    const difference = e.diff(s, unit)[unit];
+    return difference;
+  }
+
+  getTimeFormatterSpecifier(dateType: XAxisZoomItemType) {
+    switch (dateType) {
+      case XAxisZoomItemType.minute:
+        return "%I %p";
+      case XAxisZoomItemType.hour:
+        return "%H";
+      case XAxisZoomItemType.day:
+        return "%d %b";
+      case XAxisZoomItemType.week:
+        return "%b %d";
+      case XAxisZoomItemType.month:
+        return "%B";
+      case XAxisZoomItemType.year:
+        return "%Y";
+
+      default:
+        return "%d %b";
+    }
+  }
+
+  formatDate(specifier: string, date: Date) {
+    return timeFormat(specifier)(date);
   }
 
   private mapDateTypeToUnit(dateType: XAxisZoomItemType) {

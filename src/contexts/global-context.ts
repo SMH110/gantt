@@ -31,7 +31,7 @@ export const defaultState: GlobalState = {
     {
       type: XAxisZoomItemType.day,
       size: 60,
-      selected: false,
+      selected: true,
     },
     {
       type: XAxisZoomItemType.hour,
@@ -49,6 +49,7 @@ export const defaultState: GlobalState = {
       selected: false,
     },
   ],
+  scale: null as any,
 };
 export const GlobalContext = createContext<GlobalContextType>({
   state: defaultState,

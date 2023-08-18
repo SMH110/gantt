@@ -3,6 +3,7 @@ import { GlobalContext } from "../contexts";
 import { useGlobalContextStateReducer } from "../hooks";
 import { GlobalContextActions, GlobalState } from "../types";
 import { GanttProps } from "../types/gantt.type";
+import { scaleTime } from "d3";
 
 export function Gantt(props: PropsWithChildren<GanttProps>) {
   const globalContextReducer = useGlobalContextStateReducer();
@@ -31,8 +32,14 @@ export function Gantt(props: PropsWithChildren<GanttProps>) {
     });
 
     const element = rootElement.current!;
-    resizeObserver.observe(element);
-    setRenderChildren(true);
+    if (element) {
+      resizeObserver.observe(element);
+      setRenderChildren(true);
+    } else {
+      throw new Error("Couldn't find root element");
+    }
+    console.log(element.getBoundingClientRect().width);
+
     return () => {
       resizeObserver.unobserve(element);
     };

@@ -1,5 +1,6 @@
 import { ReducerAction } from "./reducer-action.type";
 import { XAxisZoomItem } from "./index";
+import { ScaleTime } from "d3";
 
 export type GlobalContextType = {
   dispatch<TPayload = any>(
@@ -35,8 +36,13 @@ export type GlobalState = {
    *
    */
   plotSizeCalculatorRegistered: boolean;
+
+  // D3 scale
+  scale: ScaleTime<number, number>;
 };
 export enum GlobalContextActions {
   partialStateUpdate = "partial-state-update",
   setRootElementSize = "set-root-element-size",
+  setScale = "set-scale",
+  setPlotWidth = "set-plot-width",
 }

@@ -17,6 +17,18 @@ export function globalContextStateReducer(
         ...action.payload,
       };
     }
+    case GlobalContextActions.setScale: {
+      return {
+        ...state,
+        scale: action.payload,
+      };
+    }
+    case GlobalContextActions.setPlotWidth: {
+      return {
+        ...state,
+        plotWidth: action.payload,
+      };
+    }
   }
   return state;
 }
