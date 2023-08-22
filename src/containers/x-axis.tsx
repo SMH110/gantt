@@ -1,40 +1,22 @@
-import { PropsWithChildren, ReactNode, useEffect, useMemo } from "react";
 import { useGlobalContext } from "../hooks";
 import { container } from "tsyringe";
 import { DateTimeHelper } from "../helpers";
-import { GlobalContextActions, GlobalState, XAxisZoomItem } from "../types";
-import { scaleTime } from "d3";
+import { XAxisZoomItem } from "../types";
+import useTicks from "../hooks/use-ticks";
 
 const dateTimeHelper = container.resolve(DateTimeHelper);
 
-export function XAxis(props: any) {
-  const { state, dispatch } = useGlobalContext();
-  const selected = state.xAxisZoomItems.find(
-    (x) => x.selected
-  ) as XAxisZoomItem;
-  const { start, end } = state;
-  const ticks = useMemo(() => {
-    /* 
-      let's us first find how many ticks we need to render based on the selected zoom
-      ticks can be based on days/years/months ..etc 
-    
-    */
+export type XAxisProps = {
+  height?: number;
+  children(ticks: Date[]): React.ReactNode;
+};
+export function XAxis(props: XAxisProps) {
+  const { state } = useGlobalContext();
+  const height = props.height || 30;
 
-    const ticks = dateTimeHelper.getTicks(start, end, selected.type);
-    const plotWidth = ticks * selected.size;
-    const scale = scaleTime()
-      .domain([start, end])
-      .range([0, ticks * selected.size]);
-    const tickIntervals = scale.ticks(ticks);
-    console.log(selected, ticks);
-
-    dispatch({ type: GlobalContextActions.setPlotWidth, payload: plotWidth });
-    dispatch({ type: GlobalContextActions.setScale, payload: scale });
-    return tickIntervals;
-  }, [selected, start, end, , dispatch]);
-
+  const ticks = useTicks();
   return (
-    <svg width={state.plotWidth}>
+    <svg width={state.plotWidth} height={height}>
       {typeof props.children === "function" && props.children(ticks)}
     </svg>
   );
