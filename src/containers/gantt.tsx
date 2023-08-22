@@ -3,7 +3,7 @@ import { GlobalContext } from "../contexts";
 import { useGlobalContextStateReducer } from "../hooks";
 import { GlobalContextActions, GlobalState } from "../types";
 import { GanttProps } from "../types/gantt.type";
-import { scaleTime } from "d3";
+import useSetScale from "../hooks/use-set-scale";
 
 export function Gantt(props: PropsWithChildren<GanttProps>) {
   const globalContextReducer = useGlobalContextStateReducer();
@@ -23,6 +23,8 @@ export function Gantt(props: PropsWithChildren<GanttProps>) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.start, props.end]);
 
+  useSetScale(props.start, props.end, globalContextReducer.dispatch);
+
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
       globalContextReducer.dispatch({
@@ -38,7 +40,6 @@ export function Gantt(props: PropsWithChildren<GanttProps>) {
     } else {
       throw new Error("Couldn't find root element");
     }
-    console.log(element.getBoundingClientRect().width);
 
     return () => {
       resizeObserver.unobserve(element);
