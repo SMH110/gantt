@@ -39,6 +39,9 @@ export type GlobalState = {
 
   // D3 scale
   scale: ScaleTime<number, number>;
+
+  /* Plot Data used to create the activities + children */
+  plotData: [];
 };
 export enum GlobalContextActions {
   partialStateUpdate = "partial-state-update",

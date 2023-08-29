@@ -12,7 +12,7 @@ function App() {
             ));
           }}
         </XAxis>
-        <Plot />
+        <Plot style={{ border: "1px solid #ccc" }} />
       </Gantt>
     </div>
   );

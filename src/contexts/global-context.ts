@@ -50,6 +50,8 @@ export const defaultState: GlobalState = {
     },
   ],
   scale: null as any,
+
+  plotData: [],
 };
 export const GlobalContext = createContext<GlobalContextType>({
   state: defaultState,

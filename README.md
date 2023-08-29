@@ -1,46 +1,37 @@
-# Getting Started with Create React App
+## Plot component
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Potentially handles all space adjustment
 
-## Available Scripts
+## Group component
 
-In the project directory, you can run:
+A group component represent a multi line/row activities
+A group also can have a children rows of activities can be be collapsed/expanded those children can have their own children ...etc.
 
-### `npm start`
+Every time renders, it pushed a new group object to the state that has
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- id
+- activities array (2D array ) the first array represent how many rows the group have and each row array is a list of activities ( start, end)
+- children: a list of Group item.
+- total height: this includes children height
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+this means each group should correspond to an y-axis row and each group children item should have corresponded representative in the y-axis.
 
-### `npm test`
+The group component should create a single ID and passes it to the rows children component
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Row component
 
-### `npm run build`
+- These are individual rows which they have activities (start, end)
+- Set a specific height or use default height
+- The height should be calculated from users input when they render activities
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The row component should also expose a function that can be passed start, end and height and returns required props to give users full control.
+should also, determine what the correct index of the row and initialize the activities row list/array
+each row should pass required information to
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Activity
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Props
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- start
+- end
+- height
