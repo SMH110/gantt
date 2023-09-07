@@ -1,14 +1,41 @@
 import { useGlobalContext } from "../hooks";
 
+export type ChildrenFunction = (options: {
+  width: number;
+  height: number;
+  startTime: number;
+  endTime: number;
+}) => JSX.Element;
+
+type RectPropsWithChildren = Omit<React.SVGProps<SVGRectElement>, "children">;
 export type ActivityProps = {
   start: number;
   end: number;
   height?: number;
-} & React.SVGProps<SVGRectElement>;
-export function Activity({ start, end, height, ...props }: ActivityProps) {
+  children?: ChildrenFunction;
+} & RectPropsWithChildren;
+export function Activity({
+  start,
+  end,
+  height,
+  children,
+  ...props
+}: ActivityProps) {
   const { state } = useGlobalContext();
   const startTime = state.scale(start);
-  const width = state.scale(end) - startTime;
+  const endTime = state.scale(end);
+  const width = endTime - startTime;
+  const rectHeight = height || 30;
 
-  return <rect {...props} height={height || 30} x={startTime} width={width} />;
+  const newChildren =
+    typeof children === "function"
+      ? children({ width, height: rectHeight, startTime, endTime })
+      : null;
+
+  return (
+    <>
+      <rect {...props} height={height || 30} x={startTime} width={width} />
+      {newChildren}
+    </>
+  );
 }

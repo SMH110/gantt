@@ -28,13 +28,37 @@ function App() {
                   end={new Date(2023, 0, 6).getTime()}
                   fill="lightblue"
                   stroke="#000"
-                />
+                >
+                  {(options) => (
+                    <text
+                      x={options.width / 2}
+                      y={options.height / 2}
+                      alignmentBaseline="middle"
+                      textAnchor="middle"
+                      fill="red"
+                    >
+                      AA
+                    </text>
+                  )}
+                </Activity>
                 <Activity
                   start={new Date(2023, 0, 6, 2).getTime()}
                   end={new Date(2023, 0, 8).getTime()}
-                  fill="lightblue"
+                  fill="orange"
                   stroke="#000"
-                />
+                >
+                  {(options: any) => (
+                    <text
+                      x={options.width / 2 + options.startTime}
+                      y={options.height / 2}
+                      alignmentBaseline="middle"
+                      textAnchor="middle"
+                      fill="blue"
+                    >
+                      B Activity
+                    </text>
+                  )}
+                </Activity>
               </Row>
               <Row>
                 <Activity
@@ -42,14 +66,19 @@ function App() {
                   end={new Date(2023, 0, 6).getTime()}
                   fill="lightblue"
                   stroke="#000"
-                />
-                <Activity
-                  start={new Date(2023, 0, 6, 2).getTime()}
-                  end={new Date(2023, 0, 8).getTime()}
-                  fill="lightblue"
-                  stroke="#000"
-                  height={50}
-                />
+                >
+                  {(options: any) => (
+                    <text
+                      x={options.width / 2 + options.startTime}
+                      y={options.height / 2}
+                      alignmentBaseline="middle"
+                      textAnchor="middle"
+                      fill="blue"
+                    >
+                      C Activity
+                    </text>
+                  )}
+                </Activity>
               </Row>
             </FixedRows>
           </Group>
