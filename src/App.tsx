@@ -3,6 +3,7 @@ import { Row } from "./containers/row";
 import { Activity } from "./containers/activity";
 import Plot from "./containers/plot";
 import Group from "./containers/group";
+import { FixedRows } from "./containers/fixed-rows";
 
 function App() {
   return (
@@ -20,35 +21,37 @@ function App() {
         </XAxis>
         <Plot style={{ border: "1px solid #ccc" }}>
           <Group id="1">
-            <Row>
-              <Activity
-                start={new Date(2023, 0, 1).getTime()}
-                end={new Date(2023, 0, 6).getTime()}
-                fill="lightblue"
-                stroke="#000"
-              />
-              <Activity
-                start={new Date(2023, 0, 6, 2).getTime()}
-                end={new Date(2023, 0, 8).getTime()}
-                fill="lightblue"
-                stroke="#000"
-              />
-            </Row>
-            <Row>
-              <Activity
-                start={new Date(2023, 0, 1).getTime()}
-                end={new Date(2023, 0, 6).getTime()}
-                fill="lightblue"
-                stroke="#000"
-              />
-              <Activity
-                start={new Date(2023, 0, 6, 2).getTime()}
-                end={new Date(2023, 0, 8).getTime()}
-                fill="lightblue"
-                stroke="#000"
-                height={50}
-              />
-            </Row>
+            <FixedRows>
+              <Row>
+                <Activity
+                  start={new Date(2023, 0, 1).getTime()}
+                  end={new Date(2023, 0, 6).getTime()}
+                  fill="lightblue"
+                  stroke="#000"
+                />
+                <Activity
+                  start={new Date(2023, 0, 6, 2).getTime()}
+                  end={new Date(2023, 0, 8).getTime()}
+                  fill="lightblue"
+                  stroke="#000"
+                />
+              </Row>
+              <Row>
+                <Activity
+                  start={new Date(2023, 0, 1).getTime()}
+                  end={new Date(2023, 0, 6).getTime()}
+                  fill="lightblue"
+                  stroke="#000"
+                />
+                <Activity
+                  start={new Date(2023, 0, 6, 2).getTime()}
+                  end={new Date(2023, 0, 8).getTime()}
+                  fill="lightblue"
+                  stroke="#000"
+                  height={50}
+                />
+              </Row>
+            </FixedRows>
           </Group>
         </Plot>
       </Gantt>

@@ -1,23 +1,19 @@
-import { Children, PropsWithChildren, ReactElement, cloneElement } from "react";
-import { Row } from "./row";
+import { PropsWithChildren, createContext } from "react";
+
+export const GroupContext = createContext<{ groupId: any; groupIndex: number }>(
+  { groupId: "", groupIndex: 0 }
+);
 
 export default function Group(
   props: PropsWithChildren<{ id: string; index?: number }>
 ) {
-  let index = 0;
-  const children = Children.map(props.children, (c) => {
-    const child = c as ReactElement<any>;
-
-    if (child.type === Row) {
-      const newRow = cloneElement(child, {
-        index: index++,
-        groupId: props.id,
-        groupIndex: props.index,
-      });
-      return newRow;
-    }
-    return child;
-  });
-
-  return <g>{children}</g>;
+  return (
+    <g>
+      <GroupContext.Provider
+        value={{ groupId: props.id, groupIndex: props.index as number }}
+      >
+        {props.children}
+      </GroupContext.Provider>
+    </g>
+  );
 }
