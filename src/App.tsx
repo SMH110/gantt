@@ -1,9 +1,9 @@
 import { Gantt, Tick, XAxis } from "./containers";
 import { Row } from "./containers/row";
-import { Activity } from "./containers/activity";
 import Plot from "./containers/plot";
 import Group from "./containers/group";
 import { FixedRows } from "./containers/fixed-rows";
+import Activity from "./containers/activity";
 
 function App() {
   return (
@@ -29,10 +29,10 @@ function App() {
                   fill="lightblue"
                   stroke="#000"
                 >
-                  {(options) => (
+                  {({ width, height, startTime }) => (
                     <text
-                      x={options.width / 2}
-                      y={options.height / 2}
+                      x={width / 2 + startTime}
+                      y={height / 2}
                       alignmentBaseline="middle"
                       textAnchor="middle"
                       fill="red"
@@ -66,6 +66,7 @@ function App() {
                   end={new Date(2023, 0, 6).getTime()}
                   fill="lightblue"
                   stroke="#000"
+                  height={40}
                 >
                   {(options: any) => (
                     <text

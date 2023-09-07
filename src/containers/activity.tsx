@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useGlobalContext } from "../hooks";
 
 export type ChildrenFunction = (options: {
@@ -39,3 +40,5 @@ export function Activity({
     </>
   );
 }
+
+export default memo(Activity);
