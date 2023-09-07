@@ -4,6 +4,35 @@ import Plot from "./containers/plot";
 import Group from "./containers/group";
 import { FixedRows } from "./containers/fixed-rows";
 import Activity from "./containers/activity";
+import { useLayoutEffect, useRef } from "react";
+
+function Text({ width, startTime, height, children }: any) {
+  const ref = useRef(null);
+
+  useLayoutEffect(() => {
+    const current = ref.current as unknown as SVGTextElement;
+    if (current) {
+      const elementWidth = current.getBoundingClientRect().width;
+      if (elementWidth > width) {
+        current.style.display = "none";
+      }
+    }
+  }, [width]);
+
+  return (
+    <text
+      ref={ref}
+      x={width / 2 + startTime}
+      y={height / 2}
+      alignmentBaseline="middle"
+      textAnchor="middle"
+      fontSize={12}
+      fontFamily="Arial"
+    >
+      {children}
+    </text>
+  );
+}
 
 function App() {
   return (
@@ -29,17 +58,9 @@ function App() {
                   fill="lightblue"
                   stroke="#000"
                 >
-                  {({ width, height, startTime }) => (
-                    <text
-                      x={width / 2 + startTime}
-                      y={height / 2}
-                      alignmentBaseline="middle"
-                      textAnchor="middle"
-                      fill="red"
-                    >
-                      AA
-                    </text>
-                  )}
+                  {(options) => {
+                    return <Text {...options}>A</Text>;
+                  }}
                 </Activity>
                 <Activity
                   start={new Date(2023, 0, 6, 2).getTime()}
@@ -47,17 +68,9 @@ function App() {
                   fill="orange"
                   stroke="#000"
                 >
-                  {(options: any) => (
-                    <text
-                      x={options.width / 2 + options.startTime}
-                      y={options.height / 2}
-                      alignmentBaseline="middle"
-                      textAnchor="middle"
-                      fill="blue"
-                    >
-                      B Activity
-                    </text>
-                  )}
+                  {(options) => {
+                    return <Text {...options}>Long Text Long Long</Text>;
+                  }}
                 </Activity>
               </Row>
               <Row>
@@ -68,17 +81,9 @@ function App() {
                   stroke="#000"
                   height={40}
                 >
-                  {(options: any) => (
-                    <text
-                      x={options.width / 2 + options.startTime}
-                      y={options.height / 2}
-                      alignmentBaseline="middle"
-                      textAnchor="middle"
-                      fill="blue"
-                    >
-                      C Activity
-                    </text>
-                  )}
+                  {(options) => {
+                    return <Text {...options}>A</Text>;
+                  }}
                 </Activity>
               </Row>
             </FixedRows>
