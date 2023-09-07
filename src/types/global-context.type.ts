@@ -41,11 +41,23 @@ export type GlobalState = {
   scale: ScaleTime<number, number>;
 
   /* Plot Data used to create the activities + children */
-  plotData: [];
+  plotData: PlotData;
 };
+
+export type PlotData = Record<string, PlotGroup>;
+
+export type PlotGroup = {
+  height: number;
+  rows: Row[];
+};
+export type Row = {
+  height: number;
+};
+
 export enum GlobalContextActions {
   partialStateUpdate = "partial-state-update",
   setRootElementSize = "set-root-element-size",
   setScale = "set-scale",
   setPlotWidth = "set-plot-width",
+  updateRowHeight = "update-plot-group-height",
 }

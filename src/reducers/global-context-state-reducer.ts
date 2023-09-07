@@ -1,3 +1,4 @@
+import { sum } from "d3";
 import { GlobalContextActions, GlobalState, ReducerAction } from "../types";
 
 export function globalContextStateReducer(
@@ -29,6 +30,27 @@ export function globalContextStateReducer(
         plotWidth: action.payload,
       };
     }
+    case GlobalContextActions.updateRowHeight: {
+      const { height, groupId, index, groupIndex } = action.payload;
+
+      const group = state.plotData[groupId] || { index: groupIndex };
+      const rows = group.rows?.slice() || [];
+      const row = rows[index] || {};
+      rows[index] = { ...row, height };
+
+      const groupHeight = sum(rows.map((x) => x.height));
+
+      return {
+        ...state,
+        plotData: {
+          ...state.plotData,
+          [groupId]: {
+            ...group,
+            height: groupHeight,
+            rows,
+          },
+        },
+      };
+    }
   }
-  return state;
 }

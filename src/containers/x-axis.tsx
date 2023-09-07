@@ -13,10 +13,8 @@ export type XAxisProps = {
 export function XAxis(props: XAxisProps) {
   const { state } = useGlobalContext();
   const height = props.height || 30;
-  console.log("x-axis before use ticks");
 
   const ticks = useTicks();
-  console.log("x-axis after use ticks");
   return (
     <svg width={state.plotWidth} height={height}>
       {typeof props.children === "function" && props.children(ticks)}
