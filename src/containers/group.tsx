@@ -39,7 +39,7 @@ export default function Group(
   /* 
   
   
-           I need a way to position fixed rows before collapsiable 
+           I need a way to position fixed rows before collapsible 
   
   */
   var previousNodeIds: string[] = [];
@@ -51,8 +51,16 @@ export default function Group(
         previousNodeIds?: string[];
       }>
     >;
+    if (item.type === FixedRows) {
+      let newChild = cloneElement(item, {
+        ...item.props,
+        previousNodeIds: previousNodeIds.slice(),
+      });
+      previousNodeIds.push("fixed-rows-" + props.id);
+      return newChild;
+    }
 
-    if (item.type === FixedRows || item.type === Group) {
+    if (item.type === Group) {
       const newChild = cloneElement(item, {
         ...item.props,
         previousNodeIds: previousNodeIds.slice(),
@@ -75,6 +83,7 @@ export default function Group(
   }, [dispatch, props.id, props.index]);
   var yPosition = useNodeHeight(props.previousNodeIds);
   console.log({ yPosition, prpevious: props.previousNodeIds, id: props.id });
+
   if (!state.plotData[props.id]) return null;
 
   return (

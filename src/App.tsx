@@ -50,6 +50,36 @@ function App() {
         </XAxis>
         <Plot style={{ border: "1px solid #ccc" }}>
           <Group id="parent">
+            <Group id="child" index={0}>
+              <FixedRows>
+                <Row>
+                  <Activity
+                    start={new Date(2023, 0, 1).getTime()}
+                    end={new Date(2023, 0, 6).getTime()}
+                    fill="#FBD1D3"
+                    stroke="#000"
+                    strokeOpacity={0.3}
+                  >
+                    {(options) => {
+                      return <Text {...options}>A - Child 1- Row 1</Text>;
+                    }}
+                  </Activity>
+                </Row>
+                <Row>
+                  <Activity
+                    start={new Date(2023, 0, 1).getTime()}
+                    end={new Date(2023, 0, 6).getTime()}
+                    fill="#FBD1D3"
+                    stroke="#000"
+                    strokeOpacity={0.3}
+                  >
+                    {(options) => {
+                      return <Text {...options}>A - Child 1- Row 2</Text>;
+                    }}
+                  </Activity>
+                </Row>
+              </FixedRows>
+            </Group>
             <FixedRows>
               <Row>
                 <Activity
@@ -90,36 +120,6 @@ function App() {
                 </Activity>
               </Row>
             </FixedRows>
-            <Group id="child" index={0}>
-              <FixedRows>
-                <Row>
-                  <Activity
-                    start={new Date(2023, 0, 1).getTime()}
-                    end={new Date(2023, 0, 6).getTime()}
-                    fill="#FBD1D3"
-                    stroke="#000"
-                    strokeOpacity={0.3}
-                  >
-                    {(options) => {
-                      return <Text {...options}>A - Child 1- Row 1</Text>;
-                    }}
-                  </Activity>
-                </Row>
-                <Row>
-                  <Activity
-                    start={new Date(2023, 0, 1).getTime()}
-                    end={new Date(2023, 0, 6).getTime()}
-                    fill="#FBD1D3"
-                    stroke="#000"
-                    strokeOpacity={0.3}
-                  >
-                    {(options) => {
-                      return <Text {...options}>A - Child 1- Row 2</Text>;
-                    }}
-                  </Activity>
-                </Row>
-              </FixedRows>
-            </Group>
             <Group id="child2" index={1}>
               <FixedRows>
                 <Row>
