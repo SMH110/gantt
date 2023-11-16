@@ -1,8 +1,8 @@
-## Plot component
+# Plot component
 
 Potentially handles all space adjustment
 
-## Group component
+## Plot Group component
 
 A group component represent a multi line/row activities
 A group also can have a children rows of activities can be be collapsed/expanded those children can have their own children ...etc.
@@ -18,7 +18,11 @@ this means each group should correspond to an y-axis row and each group children
 
 The group component should create a single ID and passes it to the rows children component
 
-## Row component
+### Fixed Rows component
+
+Group a list of rows component
+
+### Row component
 
 - These are individual rows which they have activities (start, end)
 - Set a specific height or use default height
@@ -28,10 +32,14 @@ The row component should also expose a function that can be passed start, end an
 should also, determine what the correct index of the row and initialize the activities row list/array
 each row should pass required information to
 
-## Activity
+#### Activity
 
-### Props
+##### Props
 
 - start
 - end
 - height
+
+### Child Group Component
+
+Represent a children of a plot group, each child might have its own rows and children :)

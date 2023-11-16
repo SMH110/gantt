@@ -2,17 +2,29 @@ import {
   Children,
   PropsWithChildren,
   ReactElement,
+  cloneElement,
   createContext,
+  useEffect,
 } from "react";
 import { FixedRows } from "./fixed-rows";
+import { useGlobalContext } from "../hooks";
+import { GlobalContextActions } from "../types";
+import { useNodeHeight } from "../hooks/use-node-height";
 
-export const GroupContext = createContext<{ groupId: any; groupIndex: number }>(
-  { groupId: "", groupIndex: 0 }
-);
+export const GroupContext = createContext<{
+  groupId: any;
+  groupIndex: number;
+}>({ groupId: "", groupIndex: 0 });
 
 export default function Group(
-  props: PropsWithChildren<{ id: string; index?: number }>
+  props: PropsWithChildren<{
+    id: string;
+    index?: number;
+    previousNodeIds?: string[] | void;
+  }>
 ) {
+  const { dispatch, state } = useGlobalContext();
+
   const fixedRowsAndChildren = [];
   let fixedRows = 0;
   Children.forEach(props.children, (child) => {
@@ -24,12 +36,56 @@ export default function Group(
     }
   });
 
+  /* 
+  
+  
+           I need a way to position fixed rows before collapsiable 
+  
+  */
+  var previousNodeIds: string[] = [];
+  const newChildren = Children.map(props.children, (child, index) => {
+    const item = child as ReactElement<
+      PropsWithChildren<{
+        index: number;
+        id?: string;
+        previousNodeIds?: string[];
+      }>
+    >;
+
+    if (item.type === FixedRows || item.type === Group) {
+      const newChild = cloneElement(item, {
+        ...item.props,
+        previousNodeIds: previousNodeIds.slice(),
+      });
+
+      if (item.props.id != null) {
+        previousNodeIds.push(item.props.id);
+      }
+      return newChild;
+    }
+
+    return child;
+  });
+
+  useEffect(() => {
+    dispatch({
+      type: GlobalContextActions.createNode,
+      payload: { nodeId: props.id, nodeIndex: props.index },
+    });
+  }, [dispatch, props.id, props.index]);
+  var yPosition = useNodeHeight(props.previousNodeIds);
+  console.log({ yPosition, prpevious: props.previousNodeIds, id: props.id });
+  if (!state.plotData[props.id]) return null;
+
   return (
-    <g>
+    <g transform={`translate(0, ${yPosition})`}>
       <GroupContext.Provider
-        value={{ groupId: props.id, groupIndex: props.index as number }}
+        value={{
+          groupId: props.id,
+          groupIndex: props.index as number,
+        }}
       >
-        {props.children}
+        {newChildren}
       </GroupContext.Provider>
     </g>
   );

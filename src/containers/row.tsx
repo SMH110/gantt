@@ -24,8 +24,9 @@ export function Row(
   const height = useMemo(() => {
     const activities: ReactElement<ActivityProps>[] = [];
     Children.forEach(props.children, (c) => {
-      const child = c as ReactElement<ActivityProps>;
-      if (child.type === Activity) {
+      const child = c as ReactElement<ActivityProps> | any;
+
+      if (child.type === Activity || child.type["type"] === Activity) {
         activities.push(child);
       }
     });
@@ -39,21 +40,38 @@ export function Row(
       : defaultActivityHeight;
   }, [props.children]);
 
-  useEffect(() => {
-    dispatch({
-      type: GlobalContextActions.updateRowHeight,
-      payload: {
-        height,
-        groupId: groupId,
-        index: props.index,
-        groupIndex: groupIndex,
-      },
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [height]);
+  var node = state.plotData[groupId];
+  var rows = node?.rows;
 
-  const rows = state.plotData[groupId]?.rows || [];
-  const yPosition = sum(rows.slice(0, props.index).map((x) => x.height));
+  useEffect(() => {
+    rows &&
+      dispatch({
+        type: GlobalContextActions.updateRowHeight,
+        payload: {
+          height,
+          groupId: groupId,
+          index: props.index,
+          groupIndex: groupIndex,
+        },
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [height, rows]);
+
+  var yPosition = useMemo(() => {
+    if (node && rows) {
+      var slicedRows = Object.keys(rows)
+        .sort()
+        .slice(0, props.index)
+        .map((x) => rows[x as any]);
+      var yPosition = sum(
+        slicedRows.slice(0, props.index).map((x) => x.height)
+      );
+
+      return yPosition;
+    }
+    return 0;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [node, rows]);
 
   return <g transform={`translate(0, ${yPosition})`}>{props.children}</g>;
 }

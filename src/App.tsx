@@ -49,27 +49,29 @@ function App() {
           }}
         </XAxis>
         <Plot style={{ border: "1px solid #ccc" }}>
-          <Group id="1">
+          <Group id="parent">
             <FixedRows>
               <Row>
                 <Activity
                   start={new Date(2023, 0, 1).getTime()}
                   end={new Date(2023, 0, 6).getTime()}
-                  fill="lightblue"
+                  fill="#F198AF"
                   stroke="#000"
+                  strokeOpacity={0.3}
                 >
                   {(options) => {
-                    return <Text {...options}>A</Text>;
+                    return <Text {...options}>A - Row 1</Text>;
                   }}
                 </Activity>
                 <Activity
                   start={new Date(2023, 0, 6, 2).getTime()}
                   end={new Date(2023, 0, 8).getTime()}
-                  fill="orange"
+                  fill="#EBB2D6"
                   stroke="#000"
+                  strokeOpacity={0.3}
                 >
                   {(options) => {
-                    return <Text {...options}>Long Text Long Long</Text>;
+                    return <Text {...options}>A - Row 1 </Text>;
                   }}
                 </Activity>
               </Row>
@@ -77,16 +79,77 @@ function App() {
                 <Activity
                   start={new Date(2023, 0, 1).getTime()}
                   end={new Date(2023, 0, 6).getTime()}
-                  fill="lightblue"
+                  fill="#9F81CD"
                   stroke="#000"
-                  height={40}
+                  height={50}
+                  strokeOpacity={0.3}
                 >
                   {(options) => {
-                    return <Text {...options}>A</Text>;
+                    return <Text {...options}>A - Row 2 </Text>;
                   }}
                 </Activity>
               </Row>
             </FixedRows>
+            <Group id="child" index={0}>
+              <FixedRows>
+                <Row>
+                  <Activity
+                    start={new Date(2023, 0, 1).getTime()}
+                    end={new Date(2023, 0, 6).getTime()}
+                    fill="#FBD1D3"
+                    stroke="#000"
+                    strokeOpacity={0.3}
+                  >
+                    {(options) => {
+                      return <Text {...options}>A - Child 1- Row 1</Text>;
+                    }}
+                  </Activity>
+                </Row>
+                <Row>
+                  <Activity
+                    start={new Date(2023, 0, 1).getTime()}
+                    end={new Date(2023, 0, 6).getTime()}
+                    fill="#FBD1D3"
+                    stroke="#000"
+                    strokeOpacity={0.3}
+                  >
+                    {(options) => {
+                      return <Text {...options}>A - Child 1- Row 2</Text>;
+                    }}
+                  </Activity>
+                </Row>
+              </FixedRows>
+            </Group>
+            <Group id="child2" index={1}>
+              <FixedRows>
+                <Row>
+                  <Activity
+                    start={new Date(2023, 0, 1).getTime()}
+                    end={new Date(2023, 0, 6).getTime()}
+                    fill="#FBD1D3"
+                    stroke="#000"
+                    strokeOpacity={0.3}
+                  >
+                    {(options) => {
+                      return <Text {...options}>A - Child 2- Row 1</Text>;
+                    }}
+                  </Activity>
+                </Row>
+                <Row>
+                  <Activity
+                    start={new Date(2023, 0, 1).getTime()}
+                    end={new Date(2023, 0, 6).getTime()}
+                    fill="#FBD1D3"
+                    stroke="#000"
+                    strokeOpacity={0.3}
+                  >
+                    {(options) => {
+                      return <Text {...options}>A - Child 2- Row 2</Text>;
+                    }}
+                  </Activity>
+                </Row>
+              </FixedRows>
+            </Group>
           </Group>
         </Plot>
       </Gantt>

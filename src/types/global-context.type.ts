@@ -44,11 +44,15 @@ export type GlobalState = {
   plotData: PlotData;
 };
 
-export type PlotData = Record<string, PlotGroup>;
+export type PlotData = Record<string, Node>;
 
-export type PlotGroup = {
+export type Node = {
   height: number;
-  rows: Row[];
+  index: number;
+  children: Record<string, string>;
+  parent: null | string | number;
+  rows: Record<string, Row>;
+  id: any;
 };
 export type Row = {
   height: number;
@@ -60,4 +64,62 @@ export enum GlobalContextActions {
   setScale = "set-scale",
   setPlotWidth = "set-plot-width",
   updateRowHeight = "update-plot-group-height",
+  setNodeChildren = "set-node-child",
+  createNode = "create-node",
 }
+
+/* 
+
+A                       |   ----- ------
+                        | --------------------------------------   ---
+  - Child               | ---- --- --------------------
+          - Grand Child |   -------------------------   --- ----- 
+
+
+
+          
+data = {
+    A : {
+
+    }
+}
+*/
+
+const data: any = {
+  A: {
+    index: 0,
+    height: 300,
+    rows: [{ height: 100 }, { height: 100 }],
+    children: {
+      height: 100,
+      items: {
+        Child: {
+          index: 0,
+          height: 100,
+          rows: [
+            {
+              height: 100,
+            },
+          ],
+        },
+      },
+    },
+  },
+};
+
+const data2 = {
+  A: {
+    index: 0,
+    parent: null,
+    height: 200,
+    rows: [{ height: 100 }, { height: 100 }],
+    children: ["child1"],
+  },
+  child1: {
+    index: 0,
+    parent: "A",
+    height: 300,
+    rows: [{ height: 150 }, { height: 150 }],
+    children: [],
+  },
+};

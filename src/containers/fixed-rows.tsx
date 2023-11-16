@@ -1,7 +1,19 @@
-import { Children, PropsWithChildren, ReactElement, cloneElement } from "react";
+import {
+  Children,
+  PropsWithChildren,
+  ReactElement,
+  cloneElement,
+  useMemo,
+} from "react";
 import { Row } from "./row";
+import { calculateHeight } from "../helpers/nodes";
+import { useGlobalContext } from "../hooks";
+import { useNodeHeight } from "../hooks/use-node-height";
 
-export function FixedRows({ children }: PropsWithChildren<{}>) {
+export function FixedRows({
+  children,
+  previousNodeIds,
+}: PropsWithChildren<{ previousNodeIds?: string[] }>) {
   let index = 0;
   const items = Children.map(children, (child) => {
     const item = child as ReactElement<PropsWithChildren<{ index: number }>>;
@@ -13,5 +25,7 @@ export function FixedRows({ children }: PropsWithChildren<{}>) {
     return child;
   });
 
-  return <g>{items}</g>;
+  var yPosition = useNodeHeight(previousNodeIds);
+
+  return <g transform={`translate(0, ${yPosition})`}>{items}</g>;
 }

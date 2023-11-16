@@ -1,5 +1,10 @@
 import { sum } from "d3";
-import { GlobalContextActions, GlobalState, ReducerAction } from "../types";
+import {
+  GlobalContextActions,
+  GlobalState,
+  ReducerAction,
+  Node,
+} from "../types";
 
 export function globalContextStateReducer(
   state: GlobalState,
@@ -31,16 +36,15 @@ export function globalContextStateReducer(
       };
     }
     case GlobalContextActions.updateRowHeight: {
-      const { height, groupId, index, groupIndex } = action.payload;
+      const { height, groupId, index } = action.payload;
 
-      const group = state.plotData[groupId] || { index: groupIndex };
-      const rows = group.rows?.slice() || [];
+      const group = state.plotData[groupId];
+      const rows = group.rows;
       const row = rows[index] || {};
       rows[index] = { ...row, height };
 
-      const groupHeight = sum(rows.map((x) => x.height));
-
-      return {
+      const groupHeight = sum(Object.values(rows).map((x) => x.height));
+      let x = {
         ...state,
         plotData: {
           ...state.plotData,
@@ -51,6 +55,46 @@ export function globalContextStateReducer(
           },
         },
       };
+      return x;
+    }
+
+    case GlobalContextActions.setNodeChildren: {
+      const { groupId, children } = action.payload;
+
+      const group = state.plotData[groupId];
+
+      let x = {
+        ...state,
+        plotData: {
+          ...state.plotData,
+          [groupId]: {
+            ...group,
+            children,
+          },
+        },
+      };
+      return x;
+    }
+
+    case GlobalContextActions.createNode: {
+      const { nodeId, nodeIndex, parentId } = action.payload;
+      const node: Node = {
+        children: {},
+        height: 0,
+        index: nodeIndex,
+        parent: parentId,
+        rows: {},
+        id: nodeId,
+      };
+
+      let newState = {
+        ...state,
+        plotData: {
+          ...state.plotData,
+          [nodeId]: node,
+        },
+      };
+      return newState;
     }
   }
 }
