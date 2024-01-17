@@ -74,17 +74,21 @@ export default function Group(
 
     return child;
   });
+  // Access the group context to determine if current node is a child of another node
+  var groupContext = useContext(GroupContext);
 
   useEffect(() => {
     dispatch({
       type: GlobalContextActions.createNode,
-      payload: { nodeId: props.id, nodeIndex: props.index },
+      payload: {
+        nodeId: props.id,
+        nodeIndex: props.index,
+        parentId: groupContext.groupId,
+      },
     });
-  }, [dispatch, props.id, props.index]);
+  }, [dispatch, props.id, props.index, groupContext.groupId]);
   var yPosition = useNodeHeight(props.previousNodeIds);
 
-  // Access the group context to determine if current node is a child of another node
-  var groupContext = useContext(GroupContext);
   // update state to add this node as child to another node
   useEffect(() => {
     var groupId: string = groupContext.groupId;
