@@ -4,6 +4,7 @@ import {
   ReactElement,
   cloneElement,
   createContext,
+  useContext,
   useEffect,
 } from "react";
 import { FixedRows } from "./fixed-rows";
@@ -15,7 +16,6 @@ export const GroupContext = createContext<{
   groupId: any;
   groupIndex: number;
 }>({ groupId: "", groupIndex: 0 });
-
 export default function Group(
   props: PropsWithChildren<{
     id: string;
@@ -82,7 +82,27 @@ export default function Group(
     });
   }, [dispatch, props.id, props.index]);
   var yPosition = useNodeHeight(props.previousNodeIds);
-  console.log({ yPosition, prpevious: props.previousNodeIds, id: props.id });
+
+  // Access the group context to determine if current node is a child of another node
+  var groupContext = useContext(GroupContext);
+  // update state to add this node as child to another node
+  useEffect(() => {
+    var groupId: string = groupContext.groupId;
+    if (!groupId) return;
+
+    var parent = state.plotData[groupId];
+    if (parent.children[props.id]) return;
+
+    // if we have group id in the group context that means we are a child so we need
+    // to add ourself to the parent
+    var children = { ...parent.children };
+    children[props.id] = props.id;
+
+    dispatch({
+      type: GlobalContextActions.setNodeChildren,
+      payload: { children, groupId: groupId },
+    });
+  }, [dispatch, props.id, groupContext.groupId, state.plotData]);
 
   if (!state.plotData[props.id]) return null;
 
