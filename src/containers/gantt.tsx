@@ -9,7 +9,7 @@ export function Gantt(props: PropsWithChildren<GanttProps>) {
   const globalContextReducer = useGlobalContextStateReducer();
   const rootElement = useRef<HTMLDivElement>(null);
   const [renderChildren, setRenderChildren] = useState(false);
-
+  console.log("data", globalContextReducer.state.plotData);
   useEffect(() => {
     const payload: Partial<GlobalState> = {
       start: props.start,
