@@ -96,5 +96,18 @@ export function globalContextStateReducer(
       };
       return newState;
     }
+    case GlobalContextActions.setYAxisWidth: {
+      return {
+        ...state,
+        yAxisWidth: action.payload,
+      };
+    }
+
+    case GlobalContextActions.setXAxisHTMLRef: {
+      return {
+        ...state,
+        xAxisHTMLRef: action.payload,
+      };
+    }
   }
 }

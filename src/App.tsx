@@ -37,7 +37,7 @@ function Text({ width, startTime, height, children }: any) {
 
 function App() {
   return (
-    <div className="App" style={{ marginTop: 10 }}>
+    <div className="App" style={{ margin: 10, padding: 10 }}>
       <Gantt
         start={new Date(2023, 0, 1).getTime()}
         end={new Date(2023, 2, 3).getTime()}
@@ -49,8 +49,8 @@ function App() {
             ));
           }}
         </XAxis>
-        <div>
-          <YAxis>
+        <div style={{ display: "flex" }}>
+          <YAxis width={200}>
             {(items, options) => {
               return items.map((item, index) => (
                 <g key={item.id} {...options.getRectProps(index)}>
@@ -66,9 +66,111 @@ function App() {
               ));
             }}
           </YAxis>
-          <div>
-            <Plot style={{ border: "1px solid #ccc" }}>
-              <Group id="parent">
+          <Plot style={{ border: "1px solid #ccc" }}>
+            <Group id="parent">
+              <FixedRows>
+                <Row>
+                  <Activity
+                    start={new Date(2023, 0, 1).getTime()}
+                    end={new Date(2023, 0, 6).getTime()}
+                    fill="#EBB2D6"
+                    stroke="#000"
+                    strokeOpacity={0.3}
+                  >
+                    {(options) => {
+                      return <Text {...options}>A - Row 1 </Text>;
+                    }}
+                  </Activity>
+                  <Activity
+                    start={new Date(2023, 0, 6, 2).getTime()}
+                    end={new Date(2023, 0, 8).getTime()}
+                    fill="#EBB2D6"
+                    stroke="#000"
+                    strokeOpacity={0.3}
+                  >
+                    {(options) => {
+                      return <Text {...options}>A - Row 1 </Text>;
+                    }}
+                  </Activity>
+                  <Activity
+                    start={new Date(2023, 2, 1).getTime()}
+                    end={new Date(2023, 2, 3).getTime()}
+                    fill="#F198AF"
+                    stroke="#000"
+                    strokeOpacity={0.3}
+                  >
+                    {(options) => {
+                      return <Text {...options}>A - Row 1</Text>;
+                    }}
+                  </Activity>
+                </Row>
+                <Row>
+                  <Activity
+                    start={new Date(2023, 0, 1).getTime()}
+                    end={new Date(2023, 0, 6).getTime()}
+                    fill="#9F81CD"
+                    stroke="#000"
+                    height={50}
+                    strokeOpacity={0.3}
+                  >
+                    {(options) => {
+                      return <Text {...options}>A - Row 2 </Text>;
+                    }}
+                  </Activity>
+                </Row>
+              </FixedRows>
+              <Group id="child" index={0}>
+                <FixedRows>
+                  <Row>
+                    <Activity
+                      start={new Date(2023, 0, 1).getTime()}
+                      end={new Date(2023, 0, 6).getTime()}
+                      fill="#FBD1D3"
+                      stroke="#000"
+                      strokeOpacity={0.3}
+                    >
+                      {(options) => {
+                        return <Text {...options}>A - Child 1- Row 1</Text>;
+                      }}
+                    </Activity>
+                  </Row>
+                </FixedRows>
+              </Group>
+              <Group id="child2" index={1}>
+                <FixedRows>
+                  <Row>
+                    <Activity
+                      start={new Date(2023, 0, 1).getTime()}
+                      end={new Date(2023, 0, 6).getTime()}
+                      fill="#FBD1D3"
+                      stroke="#000"
+                      strokeOpacity={0.3}
+                    >
+                      {(options) => {
+                        return <Text {...options}>A - Child 2- Row 1</Text>;
+                      }}
+                    </Activity>
+                  </Row>
+                </FixedRows>
+              </Group>
+            </Group>
+            <Group id="parent2">
+              <FixedRows>
+                <Row>
+                  <Activity
+                    start={new Date(2023, 0, 1).getTime()}
+                    end={new Date(2023, 0, 6).getTime()}
+                    fill="#F198AF"
+                    stroke="#000"
+                    strokeOpacity={0.3}
+                  >
+                    {(options) => {
+                      return <Text {...options}>Parent 2</Text>;
+                    }}
+                  </Activity>
+                </Row>
+              </FixedRows>
+              <Group id="parent2 - child 1" index={1}>
                 <FixedRows>
                   <Row>
                     <Activity
@@ -79,107 +181,14 @@ function App() {
                       strokeOpacity={0.3}
                     >
                       {(options) => {
-                        return <Text {...options}>A - Row 1</Text>;
-                      }}
-                    </Activity>
-                    <Activity
-                      start={new Date(2023, 0, 6, 2).getTime()}
-                      end={new Date(2023, 0, 8).getTime()}
-                      fill="#EBB2D6"
-                      stroke="#000"
-                      strokeOpacity={0.3}
-                    >
-                      {(options) => {
-                        return <Text {...options}>A - Row 1 </Text>;
-                      }}
-                    </Activity>
-                  </Row>
-                  <Row>
-                    <Activity
-                      start={new Date(2023, 0, 1).getTime()}
-                      end={new Date(2023, 0, 6).getTime()}
-                      fill="#9F81CD"
-                      stroke="#000"
-                      height={50}
-                      strokeOpacity={0.3}
-                    >
-                      {(options) => {
-                        return <Text {...options}>A - Row 2 </Text>;
+                        return <Text {...options}>Parent 2 - child</Text>;
                       }}
                     </Activity>
                   </Row>
                 </FixedRows>
-                <Group id="child" index={0}>
-                  <FixedRows>
-                    <Row>
-                      <Activity
-                        start={new Date(2023, 0, 1).getTime()}
-                        end={new Date(2023, 0, 6).getTime()}
-                        fill="#FBD1D3"
-                        stroke="#000"
-                        strokeOpacity={0.3}
-                      >
-                        {(options) => {
-                          return <Text {...options}>A - Child 1- Row 1</Text>;
-                        }}
-                      </Activity>
-                    </Row>
-                  </FixedRows>
-                </Group>
-                <Group id="child2" index={1}>
-                  <FixedRows>
-                    <Row>
-                      <Activity
-                        start={new Date(2023, 0, 1).getTime()}
-                        end={new Date(2023, 0, 6).getTime()}
-                        fill="#FBD1D3"
-                        stroke="#000"
-                        strokeOpacity={0.3}
-                      >
-                        {(options) => {
-                          return <Text {...options}>A - Child 2- Row 1</Text>;
-                        }}
-                      </Activity>
-                    </Row>
-                  </FixedRows>
-                </Group>
               </Group>
-              <Group id="parent2">
-                <FixedRows>
-                  <Row>
-                    <Activity
-                      start={new Date(2023, 0, 1).getTime()}
-                      end={new Date(2023, 0, 6).getTime()}
-                      fill="#F198AF"
-                      stroke="#000"
-                      strokeOpacity={0.3}
-                    >
-                      {(options) => {
-                        return <Text {...options}>Parent 2</Text>;
-                      }}
-                    </Activity>
-                  </Row>
-                </FixedRows>
-                <Group id="parent2 - child 1" index={1}>
-                  <FixedRows>
-                    <Row>
-                      <Activity
-                        start={new Date(2023, 0, 1).getTime()}
-                        end={new Date(2023, 0, 6).getTime()}
-                        fill="#F198AF"
-                        stroke="#000"
-                        strokeOpacity={0.3}
-                      >
-                        {(options) => {
-                          return <Text {...options}>Parent 2 - child</Text>;
-                        }}
-                      </Activity>
-                    </Row>
-                  </FixedRows>
-                </Group>
-              </Group>
-            </Plot>
-          </div>
+            </Group>
+          </Plot>
         </div>
       </Gantt>
     </div>

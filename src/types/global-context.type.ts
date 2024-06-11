@@ -42,6 +42,9 @@ export type GlobalState = {
 
   /* Plot Data used to create the activities + children */
   plotData: PlotData;
+
+  yAxisWidth: number;
+  xAxisHTMLRef: HTMLElement | null;
 };
 
 export type PlotData = Record<string, Node>;
@@ -66,6 +69,8 @@ export enum GlobalContextActions {
   updateRowHeight = "update-plot-group-height",
   setNodeChildren = "set-node-child",
   createNode = "create-node",
+  setYAxisWidth = "set-y-axis-width",
+  setXAxisHTMLRef = "set-x-axis-html-ref",
 }
 
 /* 

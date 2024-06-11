@@ -1,5 +1,11 @@
 import { useGlobalContext } from "../hooks";
-import { Children, PropsWithChildren, ReactElement, cloneElement } from "react";
+import {
+  Children,
+  PropsWithChildren,
+  ReactElement,
+  cloneElement,
+  useRef,
+} from "react";
 import Group from "./group";
 import { sum } from "../helpers/sum";
 
@@ -11,6 +17,7 @@ export default function Plot({
 
   var index = 0;
   var previousNodeIds: string[] = [];
+  var ref = useRef(null);
 
   var children = Children.map(props.children, (child) => {
     var item = child as ReactElement<PropsWithChildren<any>>;
@@ -35,8 +42,21 @@ export default function Plot({
       .flat()
   );
   return (
-    <svg width={state.plotWidth} {...props} height={height}>
-      {children}
-    </svg>
+    <div style={{ width: `calc(100% - ${state.yAxisWidth}px)` }}>
+      <div
+        style={{ width: "100%", overflowX: "auto" }}
+        ref={ref}
+        onScroll={() => {
+          var container = ref.current as unknown as HTMLElement;
+          if (container && state.xAxisHTMLRef) {
+            state.xAxisHTMLRef.scrollLeft = container.scrollLeft;
+          }
+        }}
+      >
+        <svg width={state.plotWidth} {...props} height={height}>
+          {children}
+        </svg>
+      </div>
+    </div>
   );
 }

@@ -1,8 +1,9 @@
 import { useGlobalContext } from "../hooks";
 import { container } from "tsyringe";
 import { DateTimeHelper } from "../helpers";
-import { XAxisZoomItem } from "../types";
+import { GlobalContextActions, XAxisZoomItem } from "../types";
 import useTicks from "../hooks/use-ticks";
+import { useLayoutEffect, useRef } from "react";
 
 const dateTimeHelper = container.resolve(DateTimeHelper);
 
@@ -11,14 +12,33 @@ export type XAxisProps = {
   children(ticks: Date[]): React.ReactNode;
 };
 export function XAxis(props: XAxisProps) {
-  const { state } = useGlobalContext();
+  const { state, dispatch } = useGlobalContext();
+  var ref = useRef(null);
   const height = props.height || 30;
+
+  useLayoutEffect(() => {
+    dispatch({
+      type: GlobalContextActions.setXAxisHTMLRef,
+      payload: ref.current,
+    });
+  }, [ref.current]);
 
   const ticks = useTicks();
   return (
-    <svg width={state.plotWidth} height={height}>
-      {typeof props.children === "function" && props.children(ticks)}
-    </svg>
+    <div
+      ref={ref}
+      style={{
+        width: `calc(100% - ${state.yAxisWidth}px)`,
+        overflowX: "hidden",
+        marginLeft: state.yAxisWidth,
+      }}
+    >
+      <div>
+        <svg width={state.plotWidth} height={height}>
+          {typeof props.children === "function" && props.children(ticks)}
+        </svg>
+      </div>
+    </div>
   );
 }
 

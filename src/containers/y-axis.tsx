@@ -1,17 +1,18 @@
 /* eslint-disable eqeqeq */
-import { PropsWithChildren, useMemo } from "react";
-import { calculateHeight } from "../helpers/nodes";
+import { useEffect, useMemo } from "react";
+import {} from "../helpers/nodes";
 import { useGlobalContext } from "../hooks";
-import { PlotData, Node } from "../types";
+import { PlotData, Node, GlobalContextActions } from "../types";
 import { sum } from "../helpers/sum";
 
 export default function YAxis(props: {
+  width: number;
   children: (
     items: { id: string; height: number }[],
     options: { getRectProps: (index: number) => { transform: string } }
   ) => any;
 }) {
-  var { state } = useGlobalContext();
+  var { state, dispatch } = useGlobalContext();
   var { plotData } = state;
 
   var items = useMemo(() => {
@@ -27,8 +28,15 @@ export default function YAxis(props: {
     };
   }
 
+  useEffect(() => {
+    dispatch({
+      type: GlobalContextActions.setYAxisWidth,
+      payload: props.width,
+    });
+  }, [props.width]);
+
   return (
-    <svg height={sum(items.map((x) => x.height))}>
+    <svg height={sum(items.map((x) => x.height))} width={props.width}>
       {children(
         items.map((x) => ({
           height: x.height,

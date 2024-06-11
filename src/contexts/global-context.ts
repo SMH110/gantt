@@ -52,6 +52,8 @@ export const defaultState: GlobalState = {
   scale: null as any,
 
   plotData: {},
+  yAxisWidth: 0,
+  xAxisHTMLRef: null,
 };
 export const GlobalContext = createContext<GlobalContextType>({
   state: defaultState,
